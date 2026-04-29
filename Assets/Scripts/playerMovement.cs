@@ -1,23 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
-public class playerMovement : MonoBehaviour
+[RequireComponent(typeof(PlayerInput))]
+public class playerMovement : Move
 {
-    public float speed = 5f;
-    // Start is called before the first frame update
-    void Start()
+    private void OnMove(InputValue value)
     {
-        
-    }
+        Vector2 playerInput = value.Get<Vector2>();
+        currentInput = playerInput.normalized;
 
-    // Update is called once per frame
-    void Update()
-    {
-        float move = Input.GetAxisRaw("Horizontal");
-        transform.Translate(Vector2.right * move * speed * Time.deltaTime);
-
-        if (move > 0) transform.localScale = new Vector3(1, 1, 1);
-        else if (move < 0) transform.localScale = new Vector3(-1, 1, 1);
+        Debug.Log("Nilai Input Bergerak: " + currentInput);
     }
 }
